@@ -9,6 +9,8 @@ import com.brih.compvispr.composite.GroupItem;
 import com.brih.compvispr.composite.GroupMultItem;
 import com.brih.compvispr.composite.Item;
 import com.brih.compvispr.composite.Ring;
+import com.brih.compvispr.visitor.CostVisitor;
+import com.brih.compvispr.visitor.ShieldVisitor;
 
 public class CompVisMain extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -22,16 +24,22 @@ public class CompVisMain extends ApplicationAdapter {
 		img = new Texture("badlogic.jpg");
 
 		GroupItem group = new GroupItem();
-		group.add(new Ring(2));
+		group.add(new Ring(2, 100));
 
-		GroupMultItem group1 = new GroupMultItem();
-		group1.add(new Ring(3));
-		group1.add(new Ring(4));
+		GroupMultItem group1 = new GroupMultItem(50);
+		group1.add(new Ring(3, 150));
+		group1.add(new Ring(4, 200));
 
 		group.add(group1);
 
 		item = group;
-		float def = item.calcShield();
+
+		item.accept(new ShieldVisitor());
+		float def = item.resultDefend;
+
+		item.accept(new CostVisitor());
+		int cost = item.resultCost;
+
 		int c = 0;
 	}
 

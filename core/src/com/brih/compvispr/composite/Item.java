@@ -1,5 +1,10 @@
 package com.brih.compvispr.composite;
 
+import com.brih.compvispr.visitor.Visitor;
+
 public abstract class Item {
-    public abstract float calcShield();
+    public int resultCost;
+    public float resultDefend;
+
+    public abstract void accept(Visitor visitor);
 }

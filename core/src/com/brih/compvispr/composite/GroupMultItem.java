@@ -1,16 +1,23 @@
 package com.brih.compvispr.composite;
 
 import com.badlogic.gdx.utils.Array;
+import com.brih.compvispr.visitor.Visitor;
 
 public class GroupMultItem extends Item {
     private Array<Item> items;
+    private int innerCost;
 
-    public GroupMultItem() {
-        items = new Array<>();
+    public Array<Item> getItems() {
+        return items;
     }
 
-    public GroupMultItem(Array<Item> items) {
-        this.items = items;
+    public int getInnerCost() {
+        return innerCost;
+    }
+
+    public GroupMultItem(int innerCost) {
+        items = new Array<>();
+        this.innerCost = innerCost;
     }
 
     public void add(Item item) {
@@ -21,12 +28,7 @@ public class GroupMultItem extends Item {
     }
 
     @Override
-    public float calcShield() {
-        float sum = 1;
-        for(Item item : items.iterator()) {
-            float locDef = item.calcShield();
-            sum *= locDef;
-        }
-        return sum;
+    public void accept(Visitor visitor) {
+        visitor.visitGroupMultItem(this);
     }
 }

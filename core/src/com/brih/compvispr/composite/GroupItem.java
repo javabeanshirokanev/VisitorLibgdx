@@ -1,9 +1,14 @@
 package com.brih.compvispr.composite;
 
 import com.badlogic.gdx.utils.Array;
+import com.brih.compvispr.visitor.Visitor;
 
 public class GroupItem extends Item {
     private Array<Item> items;
+
+    public Array<Item> getItems() {
+        return items;
+    }
 
     public GroupItem() {
         items = new Array<>();
@@ -21,12 +26,7 @@ public class GroupItem extends Item {
     }
 
     @Override
-    public float calcShield() {
-        float sum = 0;
-        for(Item item : items.iterator()) {
-            float locDef = item.calcShield();
-            sum += locDef;
-        }
-        return sum;
+    public void accept(Visitor visitor) {
+        visitor.visitGroupItem(this);
     }
 }
